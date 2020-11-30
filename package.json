@@ -1,0 +1,16 @@
+{
+  "name": "client-nodejs-testing-application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "grakn-client": "https://repo.grakn.ai/repository/npm-snapshot/grakn-client/-/grakn-client-0.0.0-b440002f3313bc5b778f263d0f572dab7a7cc992.tgz",
+    "typescript": "4.1.2"
+  }
+}
