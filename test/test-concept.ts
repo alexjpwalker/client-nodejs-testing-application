@@ -17,11 +17,11 @@
  * under the License.
  */
 
-const { GraknClient } = require("grakn-client/rpc/GraknClient");
-const { Grakn } = require("grakn-client/Grakn");
-const { AttributeType } = require("grakn-client/concept/type/AttributeType");
+import { GraknClient } from "grakn-client/rpc/GraknClient";
+import { Grakn } from "grakn-client/Grakn";
+import { AttributeType, BooleanAttributeType, DateTimeAttributeType, DoubleAttributeType, LongAttributeType, StringAttributeType } from "grakn-client/concept/type/AttributeType";
 const { SessionType, TransactionType } = Grakn;
-const assert = require("assert");
+import assert from "assert";
 
 async function run() {
     const client = new GraknClient();
@@ -217,14 +217,14 @@ async function run() {
         return;
     }
 
-    let email, workEmail, customer, age;
+    let email: StringAttributeType, workEmail: StringAttributeType, customer, age: LongAttributeType;
     try {
         tx = await session.transaction(TransactionType.WRITE);
-        email = await tx.concepts().putAttributeType("email", AttributeType.ValueType.STRING);
+        email = await tx.concepts().putAttributeType("email", AttributeType.ValueType.STRING) as StringAttributeType;
         await email.asRemote(tx).setAbstract();
-        workEmail = await tx.concepts().putAttributeType("work-email", AttributeType.ValueType.STRING);
+        workEmail = await tx.concepts().putAttributeType("work-email", AttributeType.ValueType.STRING) as StringAttributeType;
         await workEmail.asRemote(tx).setSupertype(email);
-        age = await tx.concepts().putAttributeType("age", AttributeType.ValueType.LONG);
+        age = await tx.concepts().putAttributeType("age", AttributeType.ValueType.LONG) as LongAttributeType;
         await person.asRemote(tx).setAbstract();
         await person.asRemote(tx).setOwns(email, true);
         await person.asRemote(tx).setOwns(age, false);
@@ -273,14 +273,14 @@ async function run() {
         return;
     }
 
-    let password, shoeSize, volume, isAlive, startDate;
+    let password: StringAttributeType, shoeSize: LongAttributeType, volume: DoubleAttributeType, isAlive: BooleanAttributeType, startDate: DateTimeAttributeType;
     try {
         tx = await session.transaction(TransactionType.WRITE);
         password = await tx.concepts().putAttributeType("password", AttributeType.ValueType.STRING);
-        shoeSize = await tx.concepts().putAttributeType("shoe-size", AttributeType.ValueType.LONG);
-        volume = await tx.concepts().putAttributeType("volume", AttributeType.ValueType.DOUBLE);
-        isAlive = await tx.concepts().putAttributeType("is-alive", AttributeType.ValueType.BOOLEAN);
-        startDate = await tx.concepts().putAttributeType("start-date", AttributeType.ValueType.DATETIME);
+        shoeSize = await tx.concepts().putAttributeType("shoe-size", AttributeType.ValueType.LONG) as LongAttributeType;
+        volume = await tx.concepts().putAttributeType("volume", AttributeType.ValueType.DOUBLE) as DoubleAttributeType;
+        isAlive = await tx.concepts().putAttributeType("is-alive", AttributeType.ValueType.BOOLEAN) as BooleanAttributeType;
+        startDate = await tx.concepts().putAttributeType("start-date", AttributeType.ValueType.DATETIME) as DateTimeAttributeType;
         await tx.commit();
         await tx.close();
         console.log(`put all 5 attribute value types - SUCCESS - password is a ${password.getValueType()}, shoe-size is a ${shoeSize.getValueType()}, `
