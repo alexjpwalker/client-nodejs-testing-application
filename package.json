@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "grakn-client": "https://repo.grakn.ai/repository/npm-snapshot/grakn-client/-/grakn-client-0.0.0-a9883731735d8009ab8ddefd37efac42aba209f2.tgz",
+    "grakn-client": "2.0.0-alpha",
     "typescript": "4.1.2"
   }
 }
