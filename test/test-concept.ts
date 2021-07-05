@@ -231,7 +231,7 @@ async function run() {
         await lion.asRemote(tx).setOwns(age);
         customer = await tx.concepts().putEntityType("customer");
         await customer.asRemote(tx).setSupertype(person);
-        await customer.asRemote(tx).setOwns(workEmail, true, email);
+        await customer.asRemote(tx).setOwns(workEmail, email, true);
         const ownedAttributes = await customer.asRemote(tx).getOwns().collect();
         const ownedKeys = await customer.asRemote(tx).getOwns(true).collect();
         const ownedDateTimes = await customer.asRemote(tx).getOwns(AttributeType.ValueType.DATETIME, false).collect();
@@ -276,7 +276,7 @@ async function run() {
     let password: StringAttributeType, shoeSize: LongAttributeType, volume: DoubleAttributeType, isAlive: BooleanAttributeType, startDate: DateTimeAttributeType;
     try {
         tx = await session.transaction(TransactionType.WRITE);
-        password = await tx.concepts().putAttributeType("password", AttributeType.ValueType.STRING);
+        password = await tx.concepts().putAttributeType("password", AttributeType.ValueType.STRING) as StringAttributeType;
         shoeSize = await tx.concepts().putAttributeType("shoe-size", AttributeType.ValueType.LONG) as LongAttributeType;
         volume = await tx.concepts().putAttributeType("volume", AttributeType.ValueType.DOUBLE) as DoubleAttributeType;
         isAlive = await tx.concepts().putAttributeType("is-alive", AttributeType.ValueType.BOOLEAN) as BooleanAttributeType;
@@ -295,7 +295,7 @@ async function run() {
 
     try {
         tx = await session.transaction(TransactionType.WRITE);
-        await tx.concepts().putRule("septuagenarian-rule", "{$x isa person;}", "$x has age 70");
+        await tx.logic().putRule("septuagenarian-rule", "{$x isa person;}", "$x has age 70");
         await tx.commit();
         await tx.close();
         console.log(`put rule - SUCCESS`);
